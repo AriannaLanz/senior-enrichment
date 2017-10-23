@@ -20,10 +20,10 @@ class Main extends Component {
   componentWillMount() {
     const campusesThunk = getAllCampuses();
     const studentsThunk = getAllStudents();
-    // store.dispatch(campusesThunk);
-    // store.dispatch(studentsThunk);
-    this.props.getAllCampuses();
-    this.props.getAllStudents();
+    store.dispatch(campusesThunk);
+    store.dispatch(studentsThunk);
+    // this.props.getAllCampuses();
+    // this.props.getAllStudents();
   }
 
   render() {
@@ -39,8 +39,8 @@ class Main extends Component {
             <Route path="/students/:studentId" component={SingleStudent} />
             <Route path="/add/campus" component={AddCampus} />
             <Route path="/add/student" component={AddStudent} />
-            {/* <Route path="/campuses/edit" component={EditCampus} />
-            <Route path="/students/edit" component={EditStudent} /> */}
+            <Route path="/campuses/edit/:campusId" component={EditCampus} />
+            {/* <Route path="/students/edit" component={EditStudent} /> */}
             <Route component={NotFound} />
           </Switch>
         </main>

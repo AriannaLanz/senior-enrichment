@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { postCampus } from '../reducers/campus';
 
 export class AddCampus extends Component {
@@ -13,6 +14,19 @@ export class AddCampus extends Component {
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeImage = this.handleChangeImage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event, state) {
+    this.setState({name: '', image: ''});
+    this.props.handleSubmit(event, state);
+  }
+
+  handleChangeName(event) {
+    this.setState({ name: event.target.value });
+  }
+
+  handleChangeImage(event) {
+    this.setState({ image: event.target.value });
   }
 
   render() {
@@ -56,20 +70,6 @@ export class AddCampus extends Component {
       </form>
     )
   }
-
-  handleSubmit(event, state) {
-    this.setState({name: '', image: ''});
-    this.props.handleSubmit(event, state);
-  }
-
-  handleChangeName(event) {
-    this.setState({ name: event.target.value });
-  }
-
-  handleChangeImage(event) {
-    this.setState({ image: event.target.value });
-  }
-
 }
 
 const mapState = function (state) {
@@ -81,10 +81,10 @@ const mapState = function (state) {
 const mapDispatch = function (dispatch, ownProps) {
   return {
     handleSubmit: function (event, state) {
-      evt.preventDefault();
+      event.preventDefault();
       dispatch(postCampus(state, ownProps.history));
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(AddCampus);
+export default  withRouter(connect(mapState, mapDispatch)(AddCampus));

@@ -99,12 +99,13 @@ export const createCampus = (campus) => {
     }
 }
 
-export const updateCampus = (campus) => {
+export const updateCampus = (campus, history) => {
     return (dispatch) => {
         axios.put(`/api/campuses/${campus.id}`, campus)
             .then(res => res.data)
-            .then(newCampus => {
-                dispatch(editCampus(newCampus));
+            .then(campus => {
+                dispatch(editCampus(campus));
+                history.push(`/campuses/${campus.id}`);                               
             })
             .catch(console.log.bind(console))
     }
