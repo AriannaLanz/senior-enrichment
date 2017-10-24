@@ -37,9 +37,9 @@ class Main extends Component {
             <Route path="/campuses/:campusId" component={SingleCampus} />
             <Route exact path="/students" component={AllStudents} />
             <Route path="/students/:studentId" component={SingleStudent} />
-            <Route path="/add/campus" component={AddCampus} />
-            <Route path="/add/student" component={AddStudent} />
-            <Route path="/campuses/edit/:campusId" component={EditCampus} />
+            <Route path="/add/campuses" component={AddCampus} />
+            <Route path="/add/students" component={AddStudent} />
+            <Route path="/edit/:campusId" component={EditCampus} />
             {/* <Route path="/students/edit" component={EditStudent} /> */}
             <Route component={NotFound} />
           </Switch>

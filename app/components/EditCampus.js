@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {updateCampus} from '../store';
+import {getOneCampus, updateCampus} from '../store';
+import _ from 'lodash';
 
 class EditCampus extends Component {
     constructor(props){
         super(props);
-        this.state = this.props.campus
+        this.state = {name: '', image: ''};
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeImage = this.handleChangeImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount(){
+      console.log("in CDM:", this.props);
+      // this.props.getCampus(this.props.match.params.id)
+      console.log("what does getCampus return?");
+      console.log(this.props.getCampus(this.props.match.params.campusId));
+      //this.setState(this.props.campus);
+    }
+  
     handleChangeName(event){
         this.setState({ name: event.target.value })
     }
@@ -22,14 +32,23 @@ class EditCampus extends Component {
         const edit = {name, image, id}
         if (name) edit.name = name;
         if (image) edit.image = image;
-       this.props.updateCampus(edit, state)
     }
  
   render() {
+    console.log('state:');
+    console.log(this.state);
+    const {campus} = this.props;
+    console.log(this.props);
+    console.log('campus:', campus);
+
+    //do campus.id &&
+
     return (
       <form onSubmit={(event) => this.handleSubmit(event, this.state)}>
-        <div className="form-group">
-            <h2>Edit Campus</h2>
+      {
+          campus && (
+            <div className="form-group">
+            <h2>Edit {campus.name}</h2>
             <div className="form-group">
               <label className="col-xs-2 control-label">Name</label>
               <div className="col-xs-10">
@@ -62,22 +81,31 @@ class EditCampus extends Component {
               </div>
             </div>
         </div>
+
+          )
+      }
+ 
       </form>
     )
   }
 }
 
-const mapState = function (state) {
-    return {
-      campuses: state.campuses
-    }
-  }
-  
+const mapState = ({campuses}, ownProps)  => {
+  const paramId = Number(ownProps.match.params.campusId);
+  return {
+    campus: _.find(campuses, campus => campus.id === paramId),
+  };
+};
+
+
   const mapDispatch = function (dispatch, ownProps) {
     return {
       handleSubmit: function (event, state) {
         event.preventDefault();
         dispatch(updateCampus(state, ownProps.history));
+      },
+      getCampus: function(id) {
+        dispatch(getOneCampus(id));
       }
     }
   }

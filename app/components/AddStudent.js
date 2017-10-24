@@ -9,11 +9,11 @@ export class AddStudent extends Component {
 
     this.state = {
       firstName: '',
-      lastName: '',   
+      lastName: '',  
       email: '',
       age: '',
       birthday: '',
-      campus: '',
+      campusId: '',
       campusName: 'Choose Campus'
     }
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
@@ -26,7 +26,7 @@ export class AddStudent extends Component {
   }
 
   handleSubmit(event, state) {
-    this.setState({firstName: '', lastName: '', email: '', age: '', birthday: '', campus: ''})
+    this.setState({firstName: '', lastName: '', email: '', age: '', birthday: '', campusId: ''})
     this.props.handleSubmit(event, state);
   }
 
@@ -51,8 +51,7 @@ export class AddStudent extends Component {
   }
 
   handleChangeCampus(event) {
-    this.setState({ campus: event.target.value
-     });    
+    this.setState({ campusId: event.target.value});  
   }
 
   render() {
@@ -117,11 +116,11 @@ export class AddStudent extends Component {
             </div>
             <div className="form-group">
               <label className="col-xs-2 control-label">Campus</label>
-              <select value={this.state.campus} onChange={this.handleChangeCampus} className="form-control" name="campus">
+              <select value={this.state.campusId} onChange={this.handleChangeCampus} className="form-control" name="campus">
                 <option>Choose Campus</option>
                 {this.props.campuses.map(campus => {
                   return (
-                    <option key={campus.id} value={campus.name}>{campus.name}
+                    <option key={campus.id} value={campus.id}>{campus.name}
                     </option>
                   )
                 })}
@@ -133,7 +132,7 @@ export class AddStudent extends Component {
                   type="submit"
                   className="btn btn-success"
                   disabled={
-                    this.state.firstName.length && this.state.campus.length ? false : true
+                    this.state.firstName.length && this.state.campusId.length ? false : true
                   }
                 >
                   Add Student
@@ -148,13 +147,15 @@ export class AddStudent extends Component {
 
 const mapState = ({campuses, students}) => ({campuses, students});
 
-const mapDispatch = function (dispatch) {
+const mapDispatch = function (dispatch, ownProps) {
   return {
     handleSubmit: function (event, state) {
       event.preventDefault();
-      dispatch(createStudent(state));
+      dispatch(createStudent(state, ownProps.history));
     }
   }
 }
+
+
 
 export default withRouter(connect(mapState, mapDispatch)(AddStudent));

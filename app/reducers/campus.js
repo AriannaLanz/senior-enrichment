@@ -86,13 +86,13 @@ export const getOneCampus = (id) => {
     }
 }
 
-export const createCampus = (campus) => {
+export const createCampus = (campus, history) => {
     return (dispatch) => {
         axios.post('/api/campuses/', campus)
             .then(res => res.data)
             .then(newCampus => {
                 dispatch(addCampus(newCampus));
-                // history.pushState('/campuses');
+                history.push('/campuses');
                 
             })
             .catch(console.log.bind(console))

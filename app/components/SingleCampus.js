@@ -55,9 +55,7 @@ class SingleCampus extends Component {
         </tbody> 
         </table>
         <NavLink to="/campuses/add"><button>Add Student</button></NavLink>
-          <button type="button">
-            <NavLink to={`/campuses/edit/${this.props.campusId}`}>Edit</NavLink>
-          </button>
+            <NavLink to={`/edit/${campus.id}`}><button >Edit</button></NavLink>
           <button type="button" onClick={(event) => this.props.handleDelete(event, campus)}>Remove</button>
         </div>
       )

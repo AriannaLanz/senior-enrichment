@@ -81,13 +81,13 @@ export const getAllStudents = () => {
   }
 
 
-export const createStudent = (student) => {
+export const createStudent = (student, history) => {
   return (dispatch) => {
     axios.post('/api/students/', student)
       .then(res => res.data)
       .then(newStudent => {
         dispatch(addStudent(newStudent));
-        // history.pushState('/students');        
+        history.push('/students');        
       })
       .catch(console.log.bind(console))
   }

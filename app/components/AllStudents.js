@@ -11,9 +11,6 @@ class AllStudents extends Component {
       
   render(){
     const students = this.props.students;
-    console.log(students);
-    // console.log(students.forEach(student => console.log(student.campusId)))
-    console.log(students.forEach(student => console.log(student.campus)))    
     return (
       <div>
         <div className="titlerow">
@@ -37,7 +34,7 @@ class AllStudents extends Component {
             </td>
             <td>
             {(student.campus)
-            ? (<NavLink to={`/campuses/${student.campusId}`}>{student.campus}</NavLink>)
+            ? (<NavLink to={`/campuses/${student.campusId}`}>{student.campus.name}</NavLink>)
             : "No Campus Listed"}
             </td>
               <td>
@@ -54,7 +51,7 @@ class AllStudents extends Component {
         )}
         </tbody>   
         </table>
-        <NavLink to="/students/add"><button>Add Student</button></NavLink>
+        <NavLink to="/add/students"><button>Add Student</button></NavLink>
       </div>
     );
   }

@@ -1,10 +1,17 @@
 const express = require('express')
 const models = require('../db/models/index')
 const Student = models.Student;
+const Campus = models.Campus;
+
 const router = new express.Router();
 
 router.get('/', function(req, res, next){
-	Student.findAll({})
+	Student.findAll({
+		include: [{
+			model: Campus,
+			as: 'campus',
+		}]
+	})
 		.then(student => res.json(student))
 		.catch(next)
 })
